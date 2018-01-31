@@ -44,7 +44,9 @@ class VideoFileDropDestination: NSView {
 		guard let urls = objects as? [URL], urls.count > 0 else {
 			return false
 		}
-		delegate?.received(urls: urls)
+		DispatchQueue.global(qos: .userInitiated).async {
+			self.delegate?.received(urls: urls)
+		}
 		underDraggingVideo = false
 		return true
 	}

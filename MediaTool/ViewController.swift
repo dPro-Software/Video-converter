@@ -13,12 +13,18 @@ class MainViewController: ViewController<VideoFileDropDestination>, UrlHandler {
 	
 	func received(urls: [URL]) {
 		if let first = urls.first {
-			tags = MediaMetaData(file: first).tags
+			do {
+				tags = try MediaMetaData(file: first).tags
+			} catch {
+				DispatchQueue.main.async {
+					_ = alert(message: "Unable to open file", text: error.localizedDescription + "\n" + first.relativePath)
+				}
+			}
 		}
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		genericView.delegate = self
-	}
+	}	
 }

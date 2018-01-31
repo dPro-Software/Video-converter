@@ -7,9 +7,13 @@
 //
 
 struct MediaMetaData {
+	enum Error: Swift.Error {
+		case couldNotOpenFile(reason: String)
+	}
+	
 	let tags: [String:String]
 	
-	init(file: URL) {
+	init(file: URL) throws {
 		var context: UnsafeMutablePointer<AVFormatContext>?
 		var tag: UnsafeMutablePointer<AVDictionaryEntry>?
 		
@@ -28,9 +32,9 @@ struct MediaMetaData {
 			if error == 0 {
 				description = String(cString: descriptionBytes)
 			} else {
-				description = "AVError \(result)"
+				description = "AVERROR \(result)"
 			}
-			fatalError("Unable to open \(file): \(description)")
+			throw Error.couldNotOpenFile(reason: description)
 		}
 		
 		let emptyString = [Int8(0)]
@@ -42,5 +46,14 @@ struct MediaMetaData {
 		self.tags = tags
 		
 		avformat_close_input(&context)
+	}
+}
+
+extension MediaMetaData.Error: LocalizedError {
+	var errorDescription: String? {
+		switch self {
+		case .couldNotOpenFile(reason: let reason):
+			return reason
+		}
 	}
 }
