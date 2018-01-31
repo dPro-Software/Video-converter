@@ -13,6 +13,9 @@
 		7461DE7120221D4E00B26277 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7461DE6F20221D4E00B26277 /* Main.storyboard */; };
 		7461DE7D20221D4E00B26277 /* MediaToolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7461DE7C20221D4E00B26277 /* MediaToolTests.swift */; };
 		7461DE8820221D4F00B26277 /* MediaToolUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7461DE8720221D4F00B26277 /* MediaToolUITests.swift */; };
+		7461EDB1202223A700B26277 /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7461EDB0202223A700B26277 /* DropView.swift */; };
+		7461EDB320222CD100B26277 /* Generic ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7461EDB220222CD100B26277 /* Generic ViewController.swift */; };
+		7461EDB520222FAA00B26277 /* MediaMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7461EDB420222FAA00B26277 /* MediaMetadata.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,10 @@
 		7461DE8320221D4F00B26277 /* MediaToolUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MediaToolUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7461DE8720221D4F00B26277 /* MediaToolUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaToolUITests.swift; sourceTree = "<group>"; };
 		7461DE8920221D4F00B26277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7461EDAC20221F0A00B26277 /* MediaTool-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MediaTool-Bridging-Header.h"; sourceTree = "<group>"; };
+		7461EDB0202223A700B26277 /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
+		7461EDB220222CD100B26277 /* Generic ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Generic ViewController.swift"; sourceTree = "<group>"; };
+		7461EDB420222FAA00B26277 /* MediaMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMetadata.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,11 +104,15 @@
 			isa = PBXGroup;
 			children = (
 				7461DE6920221D4E00B26277 /* AppDelegate.swift */,
+				7461EDB220222CD100B26277 /* Generic ViewController.swift */,
 				7461DE6B20221D4E00B26277 /* ViewController.swift */,
+				7461EDB0202223A700B26277 /* DropView.swift */,
+				7461EDB420222FAA00B26277 /* MediaMetadata.swift */,
 				7461DE6D20221D4E00B26277 /* Assets.xcassets */,
 				7461DE6F20221D4E00B26277 /* Main.storyboard */,
 				7461DE7220221D4E00B26277 /* Info.plist */,
 				7461DE7320221D4E00B26277 /* MediaTool.entitlements */,
+				7461EDAC20221F0A00B26277 /* MediaTool-Bridging-Header.h */,
 			);
 			path = MediaTool;
 			sourceTree = "<group>";
@@ -192,6 +203,7 @@
 				TargetAttributes = {
 					7461DE6520221D4E00B26277 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					7461DE7720221D4E00B26277 = {
@@ -259,6 +271,9 @@
 			files = (
 				7461DE6C20221D4E00B26277 /* ViewController.swift in Sources */,
 				7461DE6A20221D4E00B26277 /* AppDelegate.swift in Sources */,
+				7461EDB1202223A700B26277 /* DropView.swift in Sources */,
+				7461EDB520222FAA00B26277 /* MediaMetadata.swift in Sources */,
+				7461EDB320222CD100B26277 /* Generic ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,14 +430,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MediaTool/MediaTool.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7TD9A665TC;
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/ffmpeg/3.3.3/include;
 				INFOPLIST_FILE = MediaTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/ffmpeg/3.3.3/lib;
+				OTHER_LDFLAGS = (
+					"-lavformat",
+					"-lavutil",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devian.MediaTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MediaTool/MediaTool-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -431,14 +455,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MediaTool/MediaTool.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7TD9A665TC;
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/ffmpeg/3.3.3/include;
 				INFOPLIST_FILE = MediaTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/ffmpeg/3.3.3/lib;
+				OTHER_LDFLAGS = (
+					"-lavformat",
+					"-lavutil",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.devian.MediaTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MediaTool/MediaTool-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

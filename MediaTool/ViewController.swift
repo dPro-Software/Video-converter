@@ -8,20 +8,17 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// Do any additional setup after loading the view.
-	}
-
-	override var representedObject: Any? {
-		didSet {
-		// Update the view, if already loaded.
+class MainViewController: ViewController<VideoFileDropDestination>, UrlHandler {
+	@objc dynamic var tags = [String:String]()
+	
+	func received(urls: [URL]) {
+		if let first = urls.first {
+			tags = MediaMetaData(file: first).tags
 		}
 	}
-
-
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		genericView.delegate = self
+	}
 }
-
